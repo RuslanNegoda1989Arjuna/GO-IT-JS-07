@@ -3,31 +3,31 @@ import { galleryItems } from "./gallery-items.js";
 
 console.log(galleryItems);
 
-const divGallery = document.querySelector(".gallery");
+const divGalleryEl = document.querySelector(".gallery");
 
-const galleryMarckup = makeGalleryMarkup(galleryItems);
+const galleryMarckup = onGalleryMarckup(galleryItems);
 
-divGallery.insertAdjacentHTML("beforeend", galleryMarckup);
+divGalleryEl.insertAdjacentHTML("beforeend", galleryMarckup);
 
-function makeGalleryMarkup(gallery) {
+function onGalleryMarckup(gallery) {
   return gallery
     .map(({ preview, original, description }) => {
       return `
-      <div class="gallery__item">
-      <a class="gallery__link" href=${original}>
-         <img
-            class="gallery__image"
-            src=${preview}
-            data-source=${original}
-            alt=${description}
-          />
-      </a>
-      </div>`;
+    <div class="gallery__item">
+  <a class="gallery__link" href=${original}>
+    <img
+      class="gallery__image"
+      src=${preview}
+      data-source=${original}
+      alt=${description}
+    />
+  </a>
+</div>`;
     })
     .join("");
 }
 
-divGallery.addEventListener("click", onBigImage);
+divGalleryEl.addEventListener("click", onBigImage);
 
 function onBigImage(evt) {
   evt.preventDefault();
@@ -35,13 +35,11 @@ function onBigImage(evt) {
   if (evt.target.nodeName !== "IMG") {
     return;
   }
-  // console.log(evt.target.src);
 
   const bigImageUrl = evt.target.dataset.source;
-  console.log(bigImageUrl);
 
   const instance = basicLightbox.create(`
-    <img src=${bigImageUrl}>
+    <img src=${bigImageUrl} >
 `);
 
   instance.show();
